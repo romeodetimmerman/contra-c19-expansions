@@ -16,6 +16,9 @@ not_naked = df[df["naked"] == False]
 
 expansions = [pre, insert, post]
 
+# set seaborn context
+sns.set_context("talk")
+
 # absolute count and relative frequency plots
 for expansion in expansions:
     sorted_values = expansion["expansion_value"].value_counts().index
@@ -31,12 +34,6 @@ for expansion in expansions:
     )
 
     ax1.set_ylabel("Absolute count", fontsize=20)
-    ax1.set_title(
-        f'Combined count and relative frequency plot for {expansion["expansion_type"].iloc[0]}'.replace(
-            "_", " "
-        ),
-        fontsize=25,
-    )
     ax1.set_xlabel("Expansion value", fontsize=20)
     ax1.tick_params(axis="y", labelsize=20)
     ax1.tick_params(axis="x", labelsize=20)
@@ -74,7 +71,7 @@ counts = counts.reindex(expansion_types)
 # convert counts to relative frequencies
 relative_counts = counts.div(counts.sum(axis=1), axis=0)
 
-fig, ax = plt.subplots(figsize=(10, 7))
+fig, ax = plt.subplots(figsize=(15, 12))
 
 # plot stacked bars
 ax.bar(expansion_types, relative_counts[False], label="naked=False", color="tab:blue")
@@ -86,7 +83,6 @@ ax.bar(
     color="tab:red",
 )
 
-plt.title("Relative stacked bar plot of naked expansions by expansion type")
 plt.xlabel("Expansion type")
 plt.ylabel("Relative frequency")
 plt.legend()
@@ -133,10 +129,6 @@ plt.axhline(
     y=mean_relative_freqs["post_expansion"], linestyle="--", color=colors[2], label=None
 )
 
-plt.title(
-    "Relative frequency plot of non-naked expansions by expansion type and CT",
-    fontsize=20,
-)
 plt.xlabel("CT", fontsize=20)
 plt.ylabel("Relative frequency (naked=False)", fontsize=20)
 plt.xticks(rotation=45, fontsize=20)
@@ -177,7 +169,6 @@ sorted_df.plot.bar(
     stacked=True,
     figsize=(20, 20),
     color=["#1f77b4", "#ff7f0e", "#2ca02c"],
-    title="Aggregated count plot of naked expansions by expansion type and CT",
 )
 
 plt.show()
@@ -211,8 +202,7 @@ sorted_df = sorted_df[desired_order]
 # plot the sorted DataFrame
 sorted_df.plot.bar(
     stacked=True,
-    figsize=(20, 20),
-    title="Aggregated count plot of naked expansions by expansion type and case",
+    figsize=(30, 20),
 )
 
 plt.show()
@@ -247,7 +237,6 @@ sorted_df = sorted_df[desired_order]
 sorted_df.plot.bar(
     stacked=True,
     figsize=(20, 20),
-    title="Aggregated count plot of non-naked expansions by expansion type and CT",
 )
 
 plt.show()
@@ -280,8 +269,7 @@ sorted_df = sorted_df[desired_order]
 # plot the sorted DataFrame
 sorted_df.plot.bar(
     stacked=True,
-    figsize=(20, 20),
-    title="Aggregated count plot of non-naked expansions by expansion type and case",
+    figsize=(30, 20),
 )
 
 plt.show()
